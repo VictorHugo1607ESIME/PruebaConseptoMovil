@@ -48,6 +48,14 @@ class MainViewModel(): ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             mainRepository.getImageStatus.collect{response ->
                 when(response.status){
+                    "Load" ->{
+                        _getImageStatus.update {
+                            it.copy(
+                                status = "Load"
+                            )
+                        }
+                    }
+
                     "Success" ->{
                         _getImageStatus.update {
                             it.copy(

@@ -3,6 +3,7 @@ package com.example.pruebaconceptomovil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.SyncStateContract.Constants
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -34,12 +35,18 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             mainViewModel.getImageStatus.collect{
                 when(it.status){
+                    "Load" -> {
+                        binding.progress.visibility = View.VISIBLE
+                    }
+
                     "Success" -> {
                         dataImage = it.infoImage
                         loadImageData()
+                        binding.progress.visibility = View.GONE
                     }
 
                     "Error" -> {
+                        binding.progress.visibility = View.GONE
                         Toast.makeText(applicationContext, com.example.pruebaconceptomovil.constants.Constants.ERROR_LOAD_IMAGE, Toast.LENGTH_LONG).show()
                     }
                 }

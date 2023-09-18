@@ -27,6 +27,8 @@ class MainRepository() {
     )
 
     suspend fun getInfoImage(){
+        _getImageStatus.update { it.copy(status = "Load")
+        }
         withContext(Dispatchers.IO){
             CallServices.callService().getImageData(Constants.API_KEY).enqueue(object :
                 Callback<ImageResponse> {
